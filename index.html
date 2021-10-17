@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body onkeydown="OnKeyDown(event)" onkeyup="OnKeyUp(event)">
+
+    <div class="placar">
+        <h2>Pontos: </h2>
+        <h2 id="ponto"></h2>
+
+    </div>
+    <canvas id="myCanvas" width="950" height="500">
+
+        <img id="cenario" src="cenario.jpg">
+        <img src="dino.png" id="dino">
+
+
+    </canvas>
+    <input type="button" onclick="parar()" value="Parar">
+
+
+    <script>
+        var keycode = 0;
+
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        var pulo = document.getElementById("dino")
+
+        var img = document.getElementById("cenario")
+
+        var player = document.getElementById("dino")
+
+
+        function OnKeyDown(event) {
+            keycode = event.keyCode;
+
+        }
+
+        function OnKeyUp(event) {
+            keycode = 0;
+
+        }
+
+        function parar() {
+            clearInterval(tempo);
+        }
+
+        var j = 50;
+        var x = 0.0;
+        var pontos = 0;
+        var velocidade = 1;
+        var i = 198;
+        window.onload = function () {
+
+            function Update() {
+                x = x - 2;
+                if (x < -960) {
+                    x = 950;
+                    pontos++
+                }
+
+                ctx.clearRect(0, 0, 950, 297);
+                ctx.drawImage(img, x, 0)
+                console.log(x + ' ' + keycode);
+                console.log(pontos);
+                document.getElementById("ponto").innerHTML = pontos;
+
+
+                if (x == -700 && keycode == 0) {
+                    alert("GAME OVER");
+                    pontos = 0;
+                }
+                if (keycode == 0) {
+                    ctx.drawImage(player, j, i, 150, 190)
+                }
+                else {
+                    ctx.drawImage(player, j, 98, 150, 190);
+
+                }
+
+            }
+            if (pontos == 5) {
+                velocidade = 0.75;
+            }
+            if (pontos == 10) {
+                velocidade = 0.5;
+            }
+            var tempo = setInterval(Update, velocidade);
+            function parar() {
+                clearInterval(tempo);
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>
